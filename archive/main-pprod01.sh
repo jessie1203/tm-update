@@ -29,3 +29,4 @@ gcloud compute ssh ${bastion_gce_instance} --zone ${clusterZone} --tunnel-throug
 gcloud compute scp  --recurse ${rootFolder}/heper_scripts/2.8.1 ${bastion_gce_instance}:~  --project ${projectId} --zone ${clusterZone}
 gcloud compute ssh ${bastion_gce_instance} --zone ${clusterZone} --tunnel-through-iap --project ${projectId} -- "sh ~/2.8.1/update-2.8.1.sh $ENV $region $projectId"
 gcloud compute ssh ${bastion_gce_instance} --zone ${clusterZone} --tunnel-through-iap --project ${projectId} -- "rm -rf ~/2.8.1"
+   
