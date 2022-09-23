@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vault-installer
+  namespace: 'tm-deploy-ns'
+  labels:
+    app: vault-installer
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: eks.amazonaws.com/capacityType
+            operator: NotIn
+            values:
+            - SPOT
+          - key: cloud.google.com/gke-preemptible
+            operator: NotIn
+            values:
+            - "true"
+  priorityClassName: platform-critical
+  serviceAccountName: vault-sa
+  automountServiceAccountToken: true
+  containers:
+    - name: vault-installer
+      image: gcr.io/shared-281908/tm_vault/vault/installer/vault_installer_container@sha256:d4d57c95481793e93bebb4c6b71bdba0c279113cf1a20871a1147daa188bf822
+      env:
+        - name: CLOUD_PROVIDER
+          value: GCP
+        # This variable should be set to the name of the k8s secret that contains the secret needed
+        # to pull from the remote repository
+        #- name: IMAGE_PULL_SECRETS_NAME
+        #  value:
+      command:
+        - /bin/bash
+        - -c
+        - tail -f /dev/null
+      volumeMounts:
+        - mountPath: /release-artifacts
+          name: release-artifacts-volume
+        - mountPath: /release-artifacts/config-templates
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.3"
+          memory: 300Mi
+        limits:
+          cpu: "1.0"
+          memory: 2000Mi
+  initContainers:
+    - name: copy-crown-packages
+      image: gcr.io/shared-281908/tm_vault/vault/installer/crown_packages@sha256:8854d654da2a9abe62911ed817b9b14181cf103736d5816626c02239a6cdc8b0
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/* /release-artifacts-output/
+      volumeMounts:
+        - mountPath: /release-artifacts-output
+          name: release-artifacts-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+    - name: copy-config-templates
+      image: gcr.io/shared-281908/tm_vault/instances/common/k8s/config_templates@sha256:75b9dbea6f8866d77e0caf8f69ef142400c64447797ccf74b8d4eedbf346c71a
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/config-templates/* /config-templates-out/
+      volumeMounts:
+        - mountPath: /config-templates-out
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+  volumes:
+    - name: release-artifacts-volume
+      emptyDir: {}
+    - name: config-templates-volume
+      emptyDir: {}

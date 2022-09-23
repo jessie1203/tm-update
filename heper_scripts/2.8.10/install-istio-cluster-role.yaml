@@ -1,0 +1,363 @@
+---
+# ClusterRole required by Vault Installer pod for installing/upgrading Istio
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deploy-istio
+rules:
+  - apiGroups:
+      - authentication.istio.io
+      - config.istio.io
+      - networking.istio.io
+      - networking.k8s.io
+      - networking.x-k8s.io
+      - authorization.k8s.io
+      - authentication.k8s.io
+    resources:
+      - "*"
+    verbs:
+      - "*"
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - "*"
+  - apiGroups:
+      - monitoring.kiali.io
+    resources:
+      - monitoringdashboards
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - endpoints
+      - namespaces
+      - nodes
+      - nodes/proxy
+      - persistentvolumeclaims
+      - pods
+      - pods/log
+      - replicationcontrollers
+      - secrets
+      - serviceaccounts
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - namespaces
+      - nodes/proxy
+      - pods/exec # Needed for `istioctl version --remote=true`
+      - secrets
+      - serviceaccounts
+      - services
+    verbs:
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - "namespaces/finalizers"
+    verbs:
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - serviceaccounts
+      - configmaps
+      - services
+    verbs:
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - delete
+      - update
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - mutatingwebhookconfigurations
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - validatingwebhookconfigurations
+    verbs:
+      - "*"
+  - apiGroups:
+      - rbac.istio.io
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - delete
+      - patch
+  - apiGroups:
+      - rbac.istio.io
+    resources:
+      - "*/status"
+    verbs:
+      - update
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - create
+      - get
+      - patch
+      - list
+      - update
+      - delete
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterrolebindings
+      - clusterroles
+      - rolebindings
+      - roles
+    verbs:
+      - create
+      - get
+      - patch
+      - list
+      - update
+      - delete
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - create
+      - delete
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+      - deployments
+      - deployments/scale
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+      - delete
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - deployments/scale
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - networking.x.k8s.io
+    resources:
+      - "*"
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - delete
+  - apiGroups:
+      - extensions
+    resources:
+      - deployments
+      - deployments/scale
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - delete
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+      - ingresses/status
+    verbs:
+      - "*"
+  - apiGroups:
+      - extensions
+    resources:
+      - deployments/finalizers
+    resourceNames:
+      - istio-galley
+    verbs:
+      - update
+  - apiGroups:
+      - "certificates.k8s.io"
+    resources:
+      - "certificatesigningrequests"
+      - "certificatesigningrequests/approval"
+      - "certificatesigningrequests/status"
+      - "signers"
+    verbs:
+      - approve
+      - update
+      - create
+      - get
+      - delete
+      - watch
+  - apiGroups:
+      - "security.istio.io"
+    resources:
+      - "*"
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+      - patch
+      - update
+  - apiGroups:
+      - "security.istio.io"
+    resources:
+      - "*/status"
+    verbs:
+      - update
+  - apiGroups:
+      - "discovery.k8s.io"
+    resources:
+      - "endpointslices"
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
+  - apiGroups:
+    - ""
+    resources:
+    - events
+    verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    verbs:
+    - update
+    - patch
+  - apiGroups:
+    - "apps"
+    resources:
+    - daemonsets
+    verbs:
+    - create
+    - patch
+  - apiGroups:
+    - "multicluster.x-k8s.io"
+    resources:
+    - "serviceexports"
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - delete
+  - apiGroups:
+    - "multicluster.x-k8s.io"
+    resources:
+    - "serviceimports"
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - "telemetry.istio.io"
+    resources:
+    - '*'
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - "gateway.networking.k8s.io"
+    resources:
+    - "*"
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - "gateway.networking.k8s.io"
+    resources:
+    - '*'
+    verbs:
+    - get
+    - watch
+    - list
+    - update
+    - patch
+  - apiGroups:
+    - "extensions.istio.io"
+    resources:
+    - '*'
+    verbs:
+    - get
+    - list
+    - watch

@@ -1,0 +1,17 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  # the name of the Istio role binding
+  name: deploy-istio
+subjects:
+  - kind: ServiceAccount
+    name: deploy-istio
+    # the namespace where the Vault Installer pod is deployed to
+    namespace: 'tm-deploy-ns'
+roleRef:
+  kind: ClusterRole
+  # Allows read/write access to resources in a namespace, including the ability
+  # to create roles and rolebindings within the namespace.
+  name: deploy-istio
+  apiGroup: rbac.authorization.k8s.io

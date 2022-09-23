@@ -1,0 +1,21 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vault-installer-binder
+  # the namespace where the Vault Installer pod is deployed to
+  namespace: mybank-dev
+subjects:
+  - kind: ServiceAccount
+    # service account name. should be the same service account which the vault-installer HashiCorp Vault role
+    # is set to for successful vault-installer pod and HashiCorp Vault authentication
+    name: vault-sa
+    # the namespace where the Vault Installer pod is deployed to
+    namespace: mybank-dev
+roleRef:
+  kind: ClusterRole
+  # Allows read/write access to most resources in a namespace, including the ability
+  # to create roles and rolebindings within the namespace. It does not allow write
+  # access to resource quota or to the namespace itself.
+  name: vault-installer-role
+  apiGroup: rbac.authorization.k8s.io

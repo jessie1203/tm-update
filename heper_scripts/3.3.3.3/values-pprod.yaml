@@ -1,0 +1,1540 @@
+---
+# ***********************************************************
+# Thought Machine Example Values File:
+#  Information:
+#   - Values with defaults are set to their default value and commented out.
+#   - Docstrings are denoted by '#    >' to differentiate them from default values.
+#   - Values without defaults are set to an example value and left uncommented.
+#   - Values can depend on one another using Go templating (with Sprig) of the form `svc_url: '<<¬¬.Values.my.instance.url¬¬>>/svc'`.
+#     We use the custom delimiters `<<¬¬` and `¬¬>>` to prevent clashes with go templates in the values.
+#     Templates will be applied after defaults are merged.
+# ***********************************************************
+
+access_control:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the access-control database
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Access Control DB migrator user used for running DB migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'access_control_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'access_control_migrator'
+    # Name of the access-control database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'access_control'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'access_control'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username for the access-control database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'access_control'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'access_control'
+access_control_api:
+  # The endpoint used for ingress to the access control API
+  endpoint: 'access-control-api-gateway.${env}.icsapi.com'
+account:
+  # Default denomination to be used for an account. This is the default value if no other
+  # denomination is given during account creation.
+  default_denomination: 'IDR'
+  # The permitted denominations for an account. These are the default values if no other
+  # denominations list is provided during account creation.
+  # Acceptable values are:
+  # ["ZMW","CHE","TZS","DOP","DZD","SOS","XUA","SDG","MKD","NIO","UYU","MXN","RUB","UGX","RSD","COP","CDF","BHD","AWG","MOP","SAR","KES","BBD","XPD","BYR",
+  # "PEN","EUR","GNF","DKK","BOV","CVE","MVR","KYD","MWK","BTC","NPR","KHR","SGD","XDR","BWP","SRD","CAD","JPY","USS","ALL","MZN","UYI","KZT","MMK","UZS",
+  # "ERN","TOP","TTD","BMD","XFU","ETB","SZL","NGN","HRK","XAF","BND","KRW","SLL","PAB","NZD","HTG","GHS","XAG","OMR","SHP","BDT","GIP","IDR","SCR","RWF",
+  # "THB","PHP","AFN","LYD","BIF","LKR","XCD","XBD","SBD","STD","XBB","GMD","PYG","RON","MGA","SSP","AMD","PGK","MXV","XSU","XAU","HKD","CHF","CLP","QAR",
+  # "AED","XOF","MUR","TWD","MDL","HNL","KPW","TND","BOB","BAM","BTN","TRY","LRD","SEK","IRR","XBC","JOD","BRL","GTQ","TJS","XTS","FKP","PLN","BGN","AZN",
+  # "PKR","VEF","TMT","GYD","YER","VUV","CHW","XPF","BZD","INR","ISK","WST","LSL","FJD","XPT","EGP","CUC","XBA","ILS","MAD","USD","UAH","ZAR","CNY","JMD",
+  # "ARS","GBP","NOK","MNT","USN","CRC","AUD","DJF","MRO","SYP","LAK","KWD","KGS","IQD","MYR","CZK","COU","AOA","ANG","NAD","HUF","CLF","KMF","LBP","GEL",
+  # "VND","CUP"]
+  permitted_denominations: '["IDR"]'
+attribute_library:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the Attribute Library database
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Attribute Library DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'attribute_library_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'attribute_library_migrator'
+    # Name of the Attribute Library database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'attribute_library'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'attribute_library'
+    # Port number to connect to Attribute Library database.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the Attribute Library database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'attribute_library'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'attribute_library'
+audit:
+  cleanup:
+    # Length of time to retain audit log entries
+    #
+    #   Value must satisfy regex: ^[0-9]+\s(MINUTES|HOURS|DAYS|WEEKS|MONTHS|YEARS)$
+    ttl: '1 DAYS'
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the audit database. If this is not set, the host will be set to `vault.db.host`.
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Audit DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'audit_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'audit_migrator'
+    # The name of the audit database
+    #
+    #   Default: 'audit'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'audit'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the audit database
+    #
+    #   Default: 'audit'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'audit'
+  # The endpoint used for ingress to the audit API
+  endpoint: 'audit-api-${env}.internal.icsapi.com'
+  #    > vault_object_type_policies - The policies that must be satisfied for users to be able to view Audit Logs associated with the specified Vault
+  #    > object types. If multiple policies are listed beneath a `vault_object_type`, then at least one must be satisfied by
+  #    > a user for them to view Audit Logs associated with the Vault object type.
+  #    > This value should be given as a string of valid YAML.
+  #    > accepted_type: string
+  vault_object_type_policies: |
+    default:
+      - "default_audit_view"
+auth:
+  # The size of the cache used for storing validated service account tokens. The cryptographic
+  # operations used during authentication require a lot of memory and CPU resources to validate
+  # service account tokens. The results of cryptographic operations can be cached to provide
+  # additional performance. This value corresponds to the number of valid service account tokens
+  # stored in the cache.
+  #
+  #   Default: '200'
+  #
+  #   Value must satisfy regex: ^[1-9]\d+$|^\d$
+  service_account_cache_size: '200'
+balances:
+  db:
+    # Admin user for the balances database (used for schema initialisation)
+    #
+    #   Default: the value of vault.db.admin_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the balances database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for balances.
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Balances DB migrator user used for running db migrations
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for balances.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.migrator_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'balances_migrator'
+    # Name of the Balances database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for balances.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.name
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'balances'
+    # Database port to connect to.
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for balances.
+    #
+    #   Default: the value of vault.db.port
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the balances database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for balances.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'balances'
+bottomline:
+  # The 6-digit code of the instructing bank, used by Bottomline for outbound FPS payments
+  instructing_bank_code: '123456'
+  # The name of the instructing bank, used by Bottomline for outbound FPS payments
+  instructing_bank_name: 'Nikel'
+calendar:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the calendar database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Calendar DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'calendar_migrator'
+    # Name of the calendar database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'calendar'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the calendar database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'calendar'
+calendar_schedules:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the calendar schedules database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Calendar Schedules DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar_schedules_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'calendar_schedules_migrator'
+    # Name of the calendar schedules database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar_schedules'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'calendar_schedules'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the calendar schedules database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'calendar_schedules'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'calendar_schedules'
+common:
+  bank:
+    # The identifier for this bank. Must not start with a capital letter or have spaces between
+    # characters.
+    #
+    #   Value must satisfy regex: ^[a-z][A-Za-z0-9\-]+$
+    name: 'nikel'
+    # Sort code for the bank
+    #
+    #   Value must satisfy regex: ^[0-9]{2}-[0-9]{2}-[0-9]{2}$
+    sort_code: '10-00-00'
+  basic_auth:
+    # To enable or disable basic authentication. If enabled; user, password and password salted hash values are expected
+    #
+    #   Default: 'enable'
+    #
+    #   Accepted values: 'enable', 'disable'
+    authentication: 'disable'
+    # Password for basic auth credentials applied to ingress.
+    #
+    # Used to restrict access to Vault instances in dev/test environments.
+    #password: 'topsecret'
+    # Hash for the above password - should be generated using a command similar to the following:
+    #   openssl passwd -apr1 -salt vault topsecret
+    #password_hash: '$apr1$vault$r8zSo5z8xGRTLnCCcbS83.'
+    # Username for basic auth credentials applied to ingress.
+    #
+    # Used to restrict access to Vault instances in dev/test environments.
+    #username: 'someuser'
+  db:
+    # Use SSL when connecting to the database.
+    #
+    #   Default: 'true'
+    #
+    #   Accepted values: 'true', 'false'
+    ssl: 'true'
+    # The postgres SSL mode to use when connecting to the database, for all services.
+    # For more details, see the Postgres documentation:
+    # https://www.postgresql.org/docs/current/libpq-ssl.html
+    # Note that 'allow' and 'prefer' are not supported.
+    #
+    #   Default: 'verify-full'
+    #
+    #   Accepted values: 'disable', 'require', 'verify-ca', 'verify-full'
+    ssl_mode: 'require'
+
+    # Reformat the db username as 'user@host' when establishing a connection. Azure Psql requires this.
+    #
+    #   Default: 'false'
+    #
+    #   Accepted values: 'true', 'false'
+    use_username_hostname_format: 'false'
+  is_non_production: 'true'
+  # DEPRECATED - appears unused.
+  #
+  #   Accepted values: 'true', 'false'
+  production_reconciliation: 'false'
+  services:
+    # The exclusive domain or subdomain name which contains all subdomains used for Vault endpoints
+    # protected by SAML in an instance.
+    # The protocol and port number must be omitted. For example, if the following websites are n
+    # to be protected by SAML: ops.example.com, customer.example.com then the value must be
+    # example.com. For multiple instances on the same domain a unique subdomain must be provided.
+    # For example, for ops.dev.example.com and ops.staging.example.com the dev instance must be
+    # set to dev.example.com and the staging instance must be staging.example.com
+    #
+    #   Value must satisfy regex: ^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$
+    domain: 'icsapi.com'
+common_stream_api:
+  # The format of public topic messages consumed or produced by the Streaming API
+  #
+  #   Accepted values: 'json', 'protobuf'
+  message_format: 'json'
+configuration_layer:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the configuration layer database
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Configuration Layer DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'configuration_layer_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'configuration_layer_migrator'
+    # Name of the configuration layer database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'configuration_layer'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'configuration_layer'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the configuration layer database - used by services to access db
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'configuration_layer'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'configuration_layer'
+contract_db_data_exporter:
+  # Controls how frequently a check is made for any new data to be published to
+  # `vault.api.v1.products.product_version.created` and
+  # `vault.api.v1.products.product_version.parameter.updated` topics. The clock for the next check
+  # starts running after all new data has been published. The value can be any "duration string" as
+  # is understood by https://golang.org/pkg/time/#ParseDuration.
+  #
+  #   Default: '3h'
+  publish_interval: '1h30m'
+contract_executor:
+  # Determines how many replicas are deployed as a minimum. This is to ensure Vault can maintain the
+  # SLOs for online journeys. For production environments with high volumes this should be set to
+  # "medium", for lower volumes "small" should suffice and if no SLOs need to be honoured "demo".
+  #
+  #   Default: 'medium'
+  #
+  #   Accepted values: 'medium', 'small', 'demo'
+  size: 'demo'
+core:
+  # The endpoint used for ingress to the core API
+  endpoint: 'core-api.${env}.icsapi.com'
+customer:
+  website:
+    # The endpoint used for ingress to the customer website
+    endpoint: 'customer.${env}.icsapi.com'
+data_loader:
+  db:
+    #    > admin_user - Admin user for the data loader database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    #    > host - Hostname for the data loader database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Data Loader DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'data_loader_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'data_loader_migrator'
+    # Name of the data loader database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'data_loader'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'data_loader'
+    #    > port - Database port to connect to.
+    #    > regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the data loader database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'data_loader'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'data_loader'
+data_loader_api:
+  # The endpoint used for ingress to the data loader API
+  endpoint: 'data-loader-api.${env}.icsapi.com'
+  # The format of public topic messages consumed or produced by the data loader stream API
+  #
+  #   Default: 'protobuf'
+  #
+  #   Accepted values: 'json', 'protobuf'
+  message_format: 'json'
+documentation:
+  # The endpoint used for ingress to the documentation for vault APIs
+  endpoint: 'dd.${env}.icsapi.com'
+documents:
+  # The endpoint used for ingress to the documents service
+  endpoint: 'documents.${env}.icsapi.com'
+  # Port that the documents service should listen on
+  port: '443'
+eplatform:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the enterprise platform database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Eplatform DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'eplatform_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'eplatform_migrator'
+    # Name of the eplatform database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'eplatform'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'eplatform'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the eplatform database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'eplatform'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'eplatform'
+integrations:
+  db:
+    # Hostname for the integrations database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Integrations DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'integrations_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'integrations_migrator'
+    # Name of the integrations database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'integrations'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'integrations'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the integrations database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'integrations'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'integrations'
+istio:
+  auth_policy:
+    # Sets whether Istio should encrypt communication between Envoy Proxy's within the service mesh.
+    #
+    #   Type: bool
+    #   Accepted values: True, False
+    mtls_allow_tls: False
+    # Mutual TLS mode to use for istio
+    #
+    #   Accepted values: 'PERMISSIVE', 'STRICT'
+    mtls_mode: 'PERMISSIVE'
+  # The platform provider for the cluster, for use in CNI configuration.
+  #
+  #   Default: ''
+  #
+  #   Accepted values: 'GCP', 'AWS', 'AKS', 'OpenShift', ''
+  cloud_platform: 'GCP'
+  namespace: istio-system
+  proxy:
+    # List of comma-separated CIDR ranges to exclude from the istio proxy (empty string for none or "*" for all ranges).
+    # When using the Istio CNI, this should include the CIDR range required to access the secrets manager.
+    #
+    #   Default: ''
+    exclude_cidr: ''
+    # List of comma-separated ports to exclude from the service mesh (empty string for none).
+    # Communication on listed ports will not be intercepted via the proxy and will be routed directly to the container.
+    # Note that this list should not include the broker ports specified in kafka.client.brokers.
+    #
+    #   Default: ''
+    exclude_outbound_ports: ''
+    # List of comma-separated CIDR ranges to include for the istio proxy (empty string for none or "*" for all ranges)
+    #
+    #   Default: '*'
+    include_cidr: '*'
+k8s:
+  # Path to the docker registry used for all Docker images.
+  # This should normally be the address of the Docker registry where the Vault docker images have been pushed.
+  # No trailing '/' is allowed.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^$|^.*[^\/]$
+  docker_registry_path: 'gcr.io/shared-281908/tm_vault'
+  # Name of the Kubernetes secret that contains the credentials to pull images from a private Docker registry.
+  # It is optional and only used for private docker registry.
+  #
+  #   Default: ''
+  #
+  #   Type: string
+  # image_pull_secrets_name: 'docker-registry-secret'
+  ingress:
+    access_control:
+      # Annotations to apply only to the access control kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'access-control-api-gateway.tm-deploy-ns.svc.cluster.local'
+      # The name of the Kubernetes secret the access control Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-access-control-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    # Annotations to apply to all of the kubernetes ingress objects - the values here are example for the
+    # Nginx ingress controller
+    annotations:
+      cert-manager.io/acme-challenge-type: 'dns01'
+      cert-manager.io/acme-dns01-provider: 'instances'
+      cert-manager.io/cluster-issuer: 'lets-encrypt'
+      kubernetes.io/ingress.class: 'nginx'
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: '36s'
+      nginx.ingress.kubernetes.io/proxy-read-timeout: '600s'
+      tmachine.io/dns.class: 'private'
+      nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+    audit:
+      # Annotations to apply only to the audit kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'audit-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the audit Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-audit-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    core:
+      # Annotations to apply only to the core kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'core-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the core Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-core-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    data_loader:
+      # Annotations to apply only to the data loader kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'data-loader-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the data loader Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-data-loader-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    documentation:
+      # Annotations to apply only to the documentation kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'documentation.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the documentation Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-documentation-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    documents:
+      # Annotations to apply only to the documents kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'vault-documents-webserver-internal.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the documents Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-documents-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    # Labels to apply to kubernetes ingress objects.
+    labels:
+      cert-manager.io/provider: 'instances'
+    ops:
+      vault_admin_website:
+        # Annotations to apply only to the ops vault-admin-website kubernetes ingress object - the values
+        # here are an example for the Nginx ingress controller which would be required in the scenario
+        # where Istio service mesh is used with strict mTLS peer authentication.
+        #
+        #   Default: {}
+        #annotations:
+        #  nginx.ingress.kubernetes.io/service-upstream: "'true'"
+        #  nginx.ingress.kubernetes.io/upstream-vhost: 'vault-admin-website.tm-deploy-ns.svc.cluster.local'
+        #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+        # The name of the Kubernetes secret the ops vault-admin-website Ingress uses to secure traffic. This is optional as it has a default.
+        #
+        #   Default: 'vault-ops-vault-admin-website-ingress-cert'
+        tls_secret_name: 'vault-ingress-cert'
+    payments_hub:
+      # Annotations to apply only to the payments hub kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'payment-hub-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the payments hub Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-payments-hub-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    products:
+      # Annotations to apply only to the products kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'products-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the products Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-products-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    saml_idp:
+      # Annotations to apply only to the SAML IdP kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'saml-idp.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the SAML IdP Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-saml-idp-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    workflow_simulator:
+      # Annotations to apply only to the workflow simulator kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'workflow-simulator.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the workflow simulator Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-workflow-simulator-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    workflows:
+      # Annotations to apply only to the workflows kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'workflows-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      # The name of the Kubernetes secret the workflows Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-workflows-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+    xpl:
+      # Annotations to apply only to the xpl kubernetes ingress object - the values here are example for the
+      # Nginx ingress controller
+      #
+      #   Default: {}
+      #annotations:
+      #  nginx.ingress.kubernetes.io/upstream-vhost: 'xpl-api-gateway.tm-deploy-ns.svc.cluster.local'
+      #  nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
+      #   nginx.ingress.kubernetes.io/upstream-vhost: 'xpl-api-gateway.tm-deploy-ns.svc.cluster.local'
+      # The name of the Kubernetes secret the xpl Ingress uses to secure traffic. This is optional as it has a default.
+      #
+      #   Default: 'vault-xpl-ingress-cert'
+      tls_secret_name: 'vault-ingress-cert'
+  # The kubernetes namespace that this vault instance will be deployed to
+  namespace: 'tm-deploy-ns'
+  #    > pull_image_by_digest - IMPORTANT!! Disable this field if using the docker CLI to copy images to your private registry as
+  #    > 'docker pull+tag+push' will not preserve the original digests.
+  #    > When enabled, reference images by digest instead of semantic tag in kubernetes manifests. This
+  #    > expects the registry used with this workload to honour the original image digests. Tools such as
+  #    > 'skopeo' and 'crane' will preserve digests when copying images but the docker CLI will not.
+  #    > accepted_type: bool
+  pull_image_by_digest: false
+kafka:
+  ca_rotation:
+    # Schedule for running the kafka CA rotation job in cron format.
+    # Ignored if kafka-ca-rotation-pkg not deployed.
+    # WARNING: Make sure not to schedule for the same time as certificate rotation in the kafka-cert-rotation-pkg, this may lead to unexpected behaviour.
+    #
+    #   Default: '0 0 15 1 *'
+    schedule: '0 0 15 1 *'
+  cert_rotation:
+    # Schedule for running the kafka certificate rotation job in cron format.
+    # Ignored if kafka-cert-rotation-pkg not deployed.
+    #
+    #   Default: '0 0 1 * *'
+    schedule: '0 0 1 * *'
+  client:
+    # Set the authentication mechanism for Kafka brokers. If not set to "none", kafka.client.disable_ssl must be set to false.
+    #
+    #   Default: 'mtls'
+    #
+    #   Accepted values: 'mtls', 'scram-sha-256', 'scram-sha-512', 'none'
+    auth_mechanism: 'none'
+    # Bootstrap Broker Address(es)
+    brokers: 'my-kafka-cp-kafka.kafka-ns:9092'
+    # Set to true to disable SSL for Kafka client to broker communications
+    #
+    #   Accepted values: 'true', 'false'
+    disable_ssl: 'true'
+    # Set to true to use the System CA/truststore for Kafka client to broker communications over SSL
+    #
+    #   Default: 'false'
+    #
+    #   Accepted values: 'true', 'false'
+    use_system_ca: 'false'
+ops:
+  # Name of the bank, as displayed in the operations dashboard
+  bank_name: 'Nikel'
+  #    > currency_display - Determines if the code and/or currency symbol should be displayed for monetary values in the Operations Dashboard, i.e. code: 1,234,567.00 GBP, symbol: £1,234,567.00, code_and_symbol: GBP £1,234,567.00
+  #    > accepted_values:
+  #    > - code
+  #    > - symbol
+  #    > - code_and_symbol
+  currency_display: code
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the operations dashboard database
+    #
+    #   Default: the value of eplatform.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Ops DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'ops_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'ops_migrator'
+    # Name of the operations dashboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'ops'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'ops'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the operations dashboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'ops'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'ops'
+  # Default title for pages in the operations dashboard
+  default_page_title: 'Nikel'
+  #    > default_locale - This locale will be used for formatting values in the Operations Dashboard, including currencies, dates and times. It is used as fallback if no locale can be detected from the user's browser or if ops.use_browser_locale is set to false. Locale format should conform to an ISO 639-1 language code.
+  default_locale: en-GB
+  #    > display_timezone - Timezone used for displaying dates in the operations dashboard
+  display_timezone: UTC
+  pluggable_components:
+    # Payment hub pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    payments_hub: False
+    # Product hub pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    product_hub: False
+    # Experience layer pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    xpl: False
+  #    > use_browser_locale - Determines if to use the user's browser locale when formatting values in the Operations Dashboard, including currencies, dates and times. If set to false, the value of ops.default_locale will be used.
+  #    > accepted_values:
+  #    > - true
+  #    > - false
+  use_browser_locale: true
+  website:
+    # The endpoint used for ingress to the operations dashboard website. This must be a subdomain of
+    # common.services.domain. Cookies can only be set on the domain a request is made from. This
+    # implies that all SAML protected websites must be part of the same domain.
+    # (https://tools.ietf.org/html/rfc6265#section-4.1.2.3)
+    endpoint: 'ops.${env}.icsapi.com'
+parameter_store:
+  db:
+    #    > admin_user - Admin user for the Parameter Store database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    #    > host - Hostname for the Parameter Store database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    #    > migrator_user - Parameter Store DB migrator user used for running db migrations
+    #    > Note: Hyphen characters as part of this value are supported, but recommended to be avoided.
+    #    > If you are using client certificates, set this value to be equal to the common name of the
+    #    > \"parameter_store_migrator\" principal, which can be found in the DB principals artefact.
+    #    > regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: parameter_store_migrator
+    #    > name - Name of the Parameter Store database
+    #    > Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #    > regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: parameter_store
+    #    > port - Port number to connect to Parameter Store database.
+    #    > regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    #    > user - Username to access the Parameter Store database
+    #    > Note: Hyphen characters as part of this value are supported, but recommended to be avoided.
+    #    > If you are using client certificates, set this value to be equal to the common name of the
+    #    > \"parameter_store\" principal, which can be found in the DB principals artefact.
+    #    > regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: parameter_store
+payments_hub:
+  # Cron expression that defines when BACS Claims should be processed. A schedule runs at the time specified
+  # by the expression. If the expression is modified, the current active schedule is updated accordingly.
+  # By default, the schedule is set to run at 02:00am every day relative to London timezione (UTC+0/UTC+1).
+  #
+  #   Default: '0 2 * * *'
+  bacs_claim_schedule_expression: '0 2 * * *'
+  # Cron expression that defines when BACS Credit Transfers should be processed. A schedule runs at the time specified
+  # by the expression. If the expression is modified, the current active schedule is updated accordingly.
+  # By default, the schedule is set to run at 12:01am every day relative to London timezione (UTC+0/UTC+1).
+  #
+  #   Default: '1 0 * * *'
+  bacs_credit_transfer_schedule_expression: '1 0 * * *'
+  # Cron expression that defines when BACS Direct Debits should be processed. A schedule runs at the time specified
+  # by the expression. If the expression is modified, the current active schedule is updated accordingly.
+  # By default, the schedule is set to run at 03:00am every day relative to London timezione (UTC+0/UTC+1).
+  #
+  #   Default: '0 3 * * *'
+  bacs_direct_debit_schedule_expression: '0 3 * * *'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The account for handling BACS Direct Debit returns. This account is debited to settle the initial Direct Debit and
+  # later credited once the related direct debit return is processed. This account should be the same as the one defined in
+  # bacs_direct_debit_unapplied_inbound_account. It has been kept for backward compatibility reasons and will be removed in the next release.
+  #
+  #   Default: ''
+  bacs_direct_debit_unapplied_account: 'BACS_DIRECT_DEBIT_UNAPPLIED'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The account for handling BACS Direct Debit returns. This account is debited to settle the initial inbound Direct Debit and
+  # later credited once the related direct debit return is processed.
+  #
+  #   Default: ''
+  bacs_direct_debit_unapplied_inbound_account: 'BACS_DIRECT_DEBIT_UNAPPLIED_INBOUND'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The account for handling failed outbound Direct Debits for BACS.
+  # This account is credited if crediting the Direct Debit creditor side was not possible.
+  #
+  #   Default: ''
+  bacs_direct_debit_unapplied_outbound_account: 'BACS_DIRECT_DEBIT_UNAPPLIED_OUTBOUND'
+  # A GCP bucket for storing BACS specific files, e.g. ADDACS and AUDDIS reports.
+  #
+  #   Default: ''
+  bacs_gcp_bucket: 'tm_bacs'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The internal account for BACS. Used when issuing Postings the Postings API.
+  #
+  #   Default: ''
+  bacs_internal_account: '33'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The internal account for BACS Direct Debits. Used when issuing Postings to the Postings API.
+  #
+  #   Default: ''
+  bacs_internal_direct_debit_account: 'BACS_DIRECT_DEBIT_WASH'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The internal account used for BACS Direct Debit Refunds. Used when issuing Postings to the Postings API.
+  # This account is debited when a customer has been credited with a refund on an inbound Direct Debit.
+  # This account is credited later on, when a refund on an inbound Direct Debit is settled with the scheme.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  bacs_internal_direct_debit_refund_account: 'BACS_DIRECT_DEBIT_REFUND'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The internal wash account used for BACS Direct Debit Refunds. Used when issuing Postings to the Postings API.
+  # This account is debited when a refund of an inbound BACS Direct Debit is settled.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  bacs_internal_direct_debit_refund_wash_account: 'BACS_DIRECT_DEBIT_REFUND_WASH'
+  # Cron expression that defines when BACS Mandates should be processed. A schedule runs at the time specified
+  # by the expression. If the expression is modified, the current active schedule is updated accordingly.
+  # By default, the schedule is set to run at 02:00am every day relative to London timezione (UTC+0/UTC+1).
+  #
+  #   Default: '0 2 * * *'
+  bacs_mandate_schedule_expression: '0 2 * * *'
+  # Should only be set by clients who use Bacs functionality in the Payments Hub.
+  # The id of the internal account to which funds are redirected in the case where pre-cleared funds cannot
+  # be applied to a customer's account. Applies to BACS payments only. Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  bacs_unapplied_funds_account: 'BACS_CREDIT_TRANSFER_UNAPPLIED'
+  # The endpoint used for ingress to the payment hub.
+  endpoint: 'payments-hub-api-{env}.internal.icsapi.com'
+  # An optional json object defining the exception handling behaviour; Change to {} for no
+  # exception handling.
+  exception_handling_cases_json: |
+    {
+      "INBOUND_AUTH_REJECTIONS": {
+        "RESTRICTION_REQUIRES_REVIEW": {
+          "REDIRECT_FUNDS": true
+        }
+      }
+    }
+  # The internal account for FPS.
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  fps_internal_account: '25'
+  # A prefix that is used during the generation of a scheme_transaction_id (for FPS payments).
+  fps_txnref_prefix: 'TMFPS'
+  # An optional GCP bucket name that is used by the Vocalink service to store and retrieve
+  # payment scheme data. Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: ''
+  gcp_bucket: 'vocalink_data_bucket'
+  # A comma separated list of SWIFT BICs that are considered to be local to the Vault instance. This must be set to enable IBAN
+  # creation in the Payments Hub.
+  #
+  #   Default: ''
+  local_bics: 'BANKGB2L,BANKGB2LABC'
+  # A comma separated list of sort codes that are considered to be local to the Vault instance. The Payments Hub uses
+  # these to:
+  # - Determine if payments should be routed as OnUs payments (rather than going out to a scheme).
+  # - As a validation check during GBDSC account number generation. It is not possible to generate an account number
+  #   for a sort code that is not listed here.
+  local_sort_codes: '999999,999998'
+  # The internal account to which funds to be redirected in exception handling cases. Applies to FPS payments only.
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  redirection_account: '33'
+  # The id of the internal account to which funds are redirected in the case where pre-cleared funds cannot be applied
+  # to a customer's account (for example, in the FPS execution plan "FPS_CLEARED"). Applies to FPS payments only.
+  #
+  #   Default: '33'
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  unapplied_funds_account: '33'
+policy:
+  # Time interval to control cache renewal frequency
+  cacheRenewalInterval: '10s'
+postings:
+  api:
+    # The format of public topic messages consumed or produced by the Streaming API
+    #
+    #   Accepted values: 'json', 'proto'
+    format: 'json'
+  db:
+    # Root user for the postings database (used for schema initialisation)
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    #
+    #   Default: the value of vault.db.admin_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the postings database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Postings DB migrator user used for running db migrations
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.migrator_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'postings_migrator'
+    # Name of the Postings database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.name
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'postings'
+    # Database port to connect to.
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    #
+    #   Default: the value of vault.db.port
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the postings database
+    # Warning: For Vault versions instances created <2.6 the value must be matching the values of vault db. This can be achieved by not specifying the value to fall back on the default. For new instances created >=2.6 the value can be different if using a separate physical db for postings.
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: the value of vault.db.user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'postings'
+product_catalogue:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the product catalogue database
+    #
+    #   Default: the value of vault.db.host
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Product Catalogue DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'product_catalogue_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'product_catalogue_migrator'
+    # Name of the product catalogue database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'product_catalogue'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'product_catalogue'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the product catalogue database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'product_catalogue'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'product_catalogue'
+products_api:
+  # The endpoint used for ingress to the products API
+  endpoint: 'products-api-gateway.${env}.icsapi.com'
+saml_idp:
+  # The SAML x509 certificate used by Vault to verify requests, provided by IDP at setup.
+  # Public key in one line format string.
+  #
+  #   Value must satisfy regex: ^.*$
+  certificate: ${SAML_CERT}
+    # The key of the email SAML attribute sent by the IDP, as configured there
+  email_attribute: 'urn:oid:1.2.840.113549.1.9.1'
+  # The endpoint of the dummy SAML IDP, if used (ie, when saml_idp_pkg is deployed)
+  endpoint: 'ssaml.${env}.dumy.icsapi.com'
+  # The SAML Entity ID given by the IDP at setup
+  entity_id: 'https://ops.${env}.icsapi.com/auth/realms/tm-vault/broker/saml/endpoint/descriptor'
+  # Optional, the key of the name SAML attribute sent by the IDP, as configured there
+  name_attribute: 'urn:oid:2.5.4.42'
+  # The key of the roles SAML attribute sent by the IDP, as configured there
+  roles_attribute: 'urn:oid:1.3.6.1.4.1.5923.1.1.1.1'
+  # The SAML logout URL for the given IDP, usually not provided at setup but easy to find
+  slo_url: 'https://saml.${env}.icsapi.com/auth/realms/tm-vault/protocol/saml'
+  # The SAML SSO URL given by the IDP at setup, to which Vault will redirect
+  sso_url: 'https://saml.${env}.icsapi.com/auth/realms/tm-vault/protocol/saml'
+saml_sp:
+  #    > authn_requests_signed - Indicates whether the SAML Service Provider will sign `<samlp:AuthnRequest>` with its private
+  #    > key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  authn_requests_signed: false
+  #    > fail_on_authn_context_mismatch - Indicates that the SAML Service Provider will only accept an authn context if it corresponds to
+  #    > the requested authn context.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  fail_on_authn_context_mismatch: false
+  #    > name_id_encrypted - Specifies whether the NameID contained with `<samlp:logoutRequest>` messages sent by the SAML
+  #    > Service Provider will be encrypted using the Identity Provider's certificate.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  name_id_encrypted: false
+  #    > requested_authn_context - Specifies whether the SAML Service Provider will request that the auth context be sent in the
+  #    > authn request.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  requested_authn_context: false
+  #    > sign_metadata - Indicates whether the SAML Service Provider will sign its metadata using its private key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  sign_metadata: false
+  #    > signature_algorithm - Specifies the one-way hashing algorithm used to generate a digest to be signed by the SAML
+  #    > Service Provider. This digest is used in the process of generating a signed logout request.
+  #    > accepted_values:
+  #    > - http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+  #    > - http://www.w3.org/2001/04/xmldsig-more#rsa-sha384
+  #    > - http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
+  signature_algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+  #    > sls_req_signed - Determines whether the SAML Service Provider will sign SAML logout requests using its private
+  #    > key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  sls_req_signed: false
+  #    > sls_resp_signed - Determines whether the SAML Service Provider will sign `<samlp:logoutResponse>` messages with
+  #    > its private key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  sls_resp_signed: false
+  #    > strict - Setting the SAML Service Provider to strict enables greater protection by performing additional
+  #    > checks on the response from the SAML Identity Provider.
+  #    > accepted_values:
+  #    > - "false"
+  #    > - "true"
+  strict: 'false'
+  #    > want_assertions_encrypted - Determines whether the SAML Service Provider will require assertions sent by the SAML Identity
+  #    > Provider to be encrypted with the Service Provider's certificate.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_assertions_encrypted: false
+  #    > want_assertions_signed - Determines whether the SAML Service Provider will require assertions sent by the SAML Identity
+  #    > Provider to be signed with the Identity Provider's private key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_assertions_signed: false
+  #    > want_attribute_statement - Specifies that the SAML Service Provider expects and requires an attribute statement on the
+  #    > `<samlp:Response>` message.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_attribute_statement: false
+  #    > want_messages_signed - Indicates that the SAML Service Provider expects `<samlp:Response>`, `<samlp:LogoutRequest>` and
+  #    > `<samlp:LogoutResponse>` messages to be signed by the Identity Provider with its private key.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_messages_signed: false
+  #    > want_name_id_encrypted - Indicates that the SAML Service Provider expects the NameID sent by the Identity Provider to be
+  #    > encrypted with the Service Provider's certificate.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_name_id_encrypted: false
+  #    > want_name_id - Specifies that the SAML Service Provider requires a `NameID` element on the `<samlp:Response>`
+  #    > message.
+  #    > accepted_values:
+  #    > - false
+  #    > - true
+  want_name_id: false
+scheduler:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the scheduler database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Scheduler DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'scheduler_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'scheduler_migrator'
+    # Name of the scheduler database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'scheduler'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'scheduler'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the scheduler database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'scheduler'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'scheduler'
+secrets_management:
+  hashicorp_vault:
+    #    > address - The Hashicorp Vault endpoint
+    #    > regex: https?:\/\/
+    address: 'http://vault.hashicorp-ns.svc.cluster.local:8200'
+    #    > auth_k8s_backend - Path where the Kubernetes auth backend for the corresponding Kubernetes cluster is mounted in HashiCorp Vault.
+    auth_k8s_backend: kubernetes
+    #    > ca_pem - Optional field containing the HashiCorp Vault CA certificate chain as a string. If this field is set, it is used for TLS verification of the HashiCorp Vault server.
+    #    > This is useful when the HashiCorp Vault instance is set up with a self-signed certificate.
+    # ca_pem: |
+    #   -----BEGIN CERTIFICATE-----
+    #   intermediate CA
+    #   -----END CERTIFICATE-----
+    #   -----BEGIN CERTIFICATE-----
+    #   root CA
+    #   -----END CERTIFICATE-----
+    db:
+      #    > ca - Optional field describing the location of the Certificate Authority to use for signing database certificates
+      #    > accepted_values:
+      #    > - hault-kv
+      #    > - hault-pki
+      # ca: hault-kv
+      #    > pki_mount_point - Optional field specifying the mount point to use for the HashiCorp Vault PKI engine for database certificates.
+      #    > Defaults to “pki”. Only applies when secrets_management.hashicorp_vault.db.ca: “hault-pki”.
+      #    > regex: ^[^\/].*[^\/]$
+      # pki_mount_point: pki
+    kafka:
+      #    > ca - Optional field describing the location of the Certificate Authority to use for signing kafka certificates
+      #    > accepted_values:
+      #    > - hault-kv
+      #    > - hault-pki
+      # ca: hault-kv
+      #    > pki_mount_point - Optional field specifying the mount point to use for the HashiCorp Vault PKI engine for kafka certificate.
+      #    > Defaults to “pki”. Only applies when secrets_management.hashicorp_vault.kafka.ca: “hault-pki”.
+      #    > regex: ^[^\/].*[^\/]$
+      # pki_mount_point: pki
+    #    > namespace - Optional field specifying the HashiCorp Vault namespace, this is an Enterprise feature, should not be set for OSS Vault
+    namespace: 'hashicorp-ns'
+    #    > secret_mount_point - Path where the KV backend for secrets is mounted.
+    #    > regex: ^[^\/].*[^\/]$
+    secret_mount_point: 'secret'
+    #    > secret_prefix - Path that all secrets for this Vault instance are prefixed with
+    secret_prefix: 'myprefix'
+    #    > secret_version - Version of the KV backend used for secrets
+    #    > accepted_values:
+    #    > - "1"
+    #    > - "2"
+    secret_version: "1"
+    #    > vault_installer_hault_role - The name of a HashiCorp Vault role bound to the service account used by the Vault installer ops pod.
+    #    > The Vault installer can be used to automatically manage secrets and policies within HashiCorp Vault. To allow this, the policy supplied with the release artifacts should be granted to the role specified.
+    #    > This will grant the permissions required by the role used by the installer to manage secrets and policies.
+    vault_installer_hault_role: 'vault-sa'
+switchboard:
+  db:
+    # Hostname for the switchboard database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Switchboard DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'switchboard_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'switchboard_migrator'
+    # Name of the switchboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'switchboard'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'switchboard'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the switchboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'switchboard'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'switchboard'
+tag_resolver:
+  aws:
+    # Region to use when accessing AWS APIs
+    #
+    #   Accepted values: 'ap-east-1', 'ap-northeast-1', 'ap-northeast-2', 'ap-northeast-3', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'ca-central-1', 'cn-north-1', 'cn-northwest-1', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'eu-west-3', 'eu-north-1', 'me-south1', 'sa-east-1', 'us-east-1', 'us-east-2', 'us-gov-east-1', 'us-gov-west-1', 'us-west-1', 'us-west-2'
+    region: 'eu-west-1'
+tracing:
+  exporter:
+    # The endpoint for exporters to send traces via Jaeger protobuf protocol to.
+    #
+    #   Default: ''
+    jaeger-endpoint: 'vault-collector.jaeger:14250'
+  sampler:
+    # Sampler strategy dependent argument. For parentbased_traceidratio, the argument is the sample rate.
+    # https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md#general-sdk-configuration
+    #
+    #   Default: '0'
+    arg: '0.01'
+    # OpenTelemetry sampler based on https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#built-in-samplers
+    #
+    #   Default: 'parentbased_traceidratio'
+    #
+    #   Accepted values: 'always_off', 'parentbased_traceidratio'
+    type: 'parentbased_traceidratio'
+vault:
+  db:
+    # Admin user for the vault database (used for schema initialisation)
+    #
+    #   Default: the value of vault.db.root_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the vault database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # Vault DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'vault_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'vault_migrator'
+    # Name of the vault database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'vault'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'vault'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Name of the replication slot used in prior releases for streaming to vault services.  Required
+    # for deletion of the current slot.
+    #
+    # Must conform with the regex "^[a-z_][a-z0-9_]{0-59}+$". Usage of lower case alphabets,
+    # integers and underscores are valid.
+    #
+    #   Value must satisfy regex: ^[a-z_][a-z0-9\_]{0,59}$
+    replication_slot: 'vault_replication'
+    # User used in prior releases for streaming replication from this database to vault services.
+    # Required for deletion of the user.
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    replication_user: 'vault'
+    # Username for the vault database.
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'vault'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'vault'
+webhook_operator:
+  # The namespace to deploy the webhook operator to
+  #
+  #   Default: 'webhook-operator'
+  namespace: 'tm-deploy-ns'
+workflow_engine:
+  # Option to enable support for legacy schemas (below 3.0.0) in workflows engine.  Starlark-based and Python-based Workflow transforms are supported, and this optional configuration setting disables legacy Workflows schema (i.e. all Workflow schema versions prior to 3.0).  There is an identical value for `workflow_simulator`.  This configuration option is temporary and will be removed in Vault 4.0, which will only support Starlark-based transformations. Starlark-based Workflows offer enhanced security posture due to their more restricted runtime and sandbox support.
+  #
+  # WARNING: When `legacy_schema_versions_enabled` is set to `false`, any Workflows based on schema versions prior to 3.0 will no longer function. The default is `true`, which supports both legacy (Python-based) and current (Starlark-based) Workflow transforms.
+  #
+  #   Default: 'true'
+  #
+  #   Accepted values: 'false', 'true'
+  legacy_schema_versions_enabled: 'true'
+workflow_simulator:
+  # The endpoint used for ingress to the workflow simulator
+  endpoint: 'workflow-simulator.${env}.icsapi.com'
+  # Option to enable support for legacy schemas (below 3.0.0) in workflows simulator.  Starlark-based and Python-based Workflow transforms are supported, and this optional configuration setting disables legacy Workflows schema (i.e. all Workflow schema versions prior to 3.0).  There is an identical value for `workflow_engine`.  This configuration option is temporary and will be removed in Vault 4.0, which will only support Starlark-based transformations. Starlark-based Workflows offer enhanced security posture due to their more restricted runtime and sandbox support.
+  #
+  # WARNING: When `legacy_schema_versions_enabled` is set to `false`, any Workflows based on schema versions prior to 3.0 will no longer function. The default is `true`, which supports both legacy (Python-based) and current (Starlark-based) Workflow transforms.
+  #
+  #   Default: 'true'
+  #
+  #   Accepted values: 'false', 'true'
+  legacy_schema_versions_enabled: 'true'
+workflows_api:
+  # The endpoint used for ingress to the switchboard API
+  endpoint: 'workflows-api-gateway.${env}.icsapi.com'
+workflows_callback_router:
+  # Lists of public topics consumed by the callback router
+  streaming_api_consumer_config: |
+    # Public topics to be consumed by the callback router for auto trigger conditions.
+    # See {documentation-url}/reference/workflows-tickets/workflow-actions/callback-action/#streaming-api-autotrigger
+    ASYNC_CALLBACK_TOPICS: []
+
+    # Public topics to be consumed by the callback router for auto instantiation conditions.
+    # See {documentation-url}/reference/workflows-tickets/workflow-auto-instantiations/#auto-instantiations-overview
+    AUTO_INSTANTIATION_TOPICS: []
+xpl:
+  db:
+    #    > admin_user - Admin user for the database (used for schema initialisation)
+    #    > regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    admin_user: 'vaultbootstrap'
+    # Hostname for the experience layer database
+    host: 'tm-vault.${env}.db.internal.icsapi.com'
+    # XPL DB migrator user used for running db migrations
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'xpl_migrator'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    migrator_user: 'xpl_migrator'
+    # Name of the experience layer database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'xpl'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'xpl'
+    # Database port to connect to.
+    #
+    #   Default: '5432'
+    #
+    #   Value must satisfy regex: ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    port: '5432'
+    # Username to access the experience layer database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'xpl'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'xpl'
+  # The endpoint used for ingress to the XPL API
+  endpoint: 'xpl-api-gateway.${env}.icsapi.com'

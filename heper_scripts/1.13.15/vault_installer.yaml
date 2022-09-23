@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vault-installer
+  namespace: ics
+  labels:
+    app: vault-installer
+spec:
+  priorityClassName: platform-critical
+  serviceAccountName: vault-sa
+  automountServiceAccountToken: true
+  containers:
+    - name: vault-installer
+      image: gcr.io/shared-281908/tm_vault/vault/installer/vault_installer_container:1.13.15
+      env:
+        - name: CONTAINER_REGISTRY
+          value: gcr.io/shared-281908/tm_vault
+        - name: NAMESPACE
+          value: tm-deploy-ns
+        - name: MONITORING_NAMESPACE
+          value: tm-monitoring
+        - name: CROWN_WHITELIST_FILE
+          value: /release-artifacts/packages.txt
+        - name: CLOUD_PROVIDER
+          value: GCP
+        # This variable should be set to the name of the k8s secret that contains the secret needed
+        # to pull from the remote repository
+        #- name: IMAGE_PULL_SECRETS_NAME
+        #  value:
+      command:
+        - /bin/bash
+        - -c
+        - tail -f /dev/null
+      volumeMounts:
+        - mountPath: /release-artifacts
+          name: release-artifacts-volume
+        - mountPath: /release-artifacts/hecate-templates
+          name: hecate-template-volume
+        - mountPath: /release-artifacts/config-templates
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "1.0"
+          memory: 2000Mi
+  initContainers:
+    - name: copy-crown-packages
+      image: gcr.io/shared-281908/tm_vault/vault/installer/crown_packages:1.13.15
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/* /release-artifacts-output/
+      volumeMounts:
+        - mountPath: /release-artifacts-output
+          name: release-artifacts-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+    - name: copy-hecate-artifacts
+      image: gcr.io/shared-281908/tm_vault/vault/installer/hecate_container:1.13.15
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/hecate-templates/* /hecate-artifacts-output/
+      volumeMounts:
+        - mountPath: /hecate-artifacts-output
+          name: hecate-template-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+    - name: copy-config-templates
+      image: gcr.io/shared-281908/tm_vault/instances/common/k8s/config_templates:1.13.15
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/config-templates/* /config-templates-out/
+      volumeMounts:
+        - mountPath: /config-templates-out
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+  volumes:
+    - name: release-artifacts-volume
+      emptyDir: {}
+    - name: hecate-template-volume
+      emptyDir: {}
+    - name: config-templates-volume
+      emptyDir: {}

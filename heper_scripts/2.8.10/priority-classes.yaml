@@ -1,0 +1,40 @@
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: platform-critical
+value: 50
+globalDefault: false
+description: "This priority should be used on pods that are essential for the system to function and essential monitoring components"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: platform
+value: 40
+globalDefault: false
+description: "This priority is reserved for monitoring and alerting services that should be prioritised but aren't essential"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: category-a
+value: 30
+globalDefault: false
+description: "Category A is reserved for essential business components"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: category-b
+value: 20
+globalDefault: false
+description: "Category B is reserved for standard business components with normal SLA requirements"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: category-c
+value: 10
+globalDefault: false
+description: "Category C is reserved for for background service jobs with low or no SLA requirements"

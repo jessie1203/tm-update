@@ -1,0 +1,674 @@
+---
+access_control_api:
+  # The endpoint used for ingress to the access control API
+  endpoint: 'access-control-api.internal.prod.icsapi.com'
+account:
+  # Default denomination to be used for an account. This is the default value if no other
+  # denomination is given during account creation.
+  default_denomination: 'IDR'
+  # The permitted denominations for an account. These are the default values if no other
+  # denominations list is provided during account creation.
+  # Acceptable values are:
+  # ["ZMW","CHE","TZS","DOP","DZD","SOS","XUA","SDG","MKD","NIO","UYU","MXN","RUB","UGX","RSD","COP","CDF","BHD","AWG","MOP","SAR","KES","BBD","XPD","BYR",
+  # "PEN","EUR","GNF","DKK","BOV","CVE","MVR","KYD","MWK","BTC","NPR","KHR","SGD","XDR","BWP","SRD","CAD","JPY","USS","ALL","MZN","UYI","KZT","MMK","UZS",
+  # "ERN","TOP","TTD","BMD","XFU","ETB","SZL","NGN","HRK","XAF","BND","KRW","SLL","PAB","NZD","HTG","GHS","XAG","OMR","SHP","BDT","GIP","IDR","SCR","RWF",
+  # "THB","PHP","AFN","LYD","BIF","LKR","XCD","XBD","SBD","STD","XBB","GMD","PYG","RON","MGA","SSP","AMD","PGK","MXV","XSU","XAU","HKD","CHF","CLP","QAR",
+  # "AED","XOF","MUR","TWD","MDL","HNL","KPW","TND","BOB","BAM","BTN","TRY","LRD","SEK","IRR","XBC","JOD","BRL","GTQ","TJS","XTS","FKP","PLN","BGN","AZN",
+  # "PKR","VEF","TMT","GYD","YER","VUV","CHW","XPF","BZD","INR","ISK","WST","LSL","FJD","XPT","EGP","CUC","XBA","ILS","MAD","USD","UAH","ZAR","CNY","JMD",
+  # "ARS","GBP","NOK","MNT","USN","CRC","AUD","DJF","MRO","SYP","LAK","KWD","KGS","IQD","MYR","CZK","COU","AOA","ANG","NAD","HUF","CLF","KMF","LBP","GEL",
+  # "VND","CUP"]
+  permitted_denominations: '["GBP","EUR","CHF","IDR"]'
+audit:
+  cleanup:
+    # Length of time to retain audit log entries
+    ttl: '1 DAYS'
+  db:
+    # Hostname for the audit database. If this is not set, the host will be set to `vault.db.host`.
+    #
+    #   Default: the value of vault.db.host
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Is this database an RDS instance? Used to enable RDS specific functionality
+    #
+    #   Default: the value of vault.db.is_rds
+    #
+    #   Accepted values: 'true', 'false'
+    is_rds: 'false'
+    # The name of the audit database
+    #
+    #   Default: the value of vault.db.name
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'audit'
+    # Root user for the audit database (used for schema initialisation)
+    #
+    #   Default: the value of vault.db.root_user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    root_user: 'vaultbootstrap'
+    # Username to access the audit database
+    #
+    #   Default: the value of vault.db.user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'audit'
+  # The endpoint used for ingress to the audit API
+  endpoint: 'audit-api.internal.prod.icsapi.com'
+auth:
+  # The size of the cache used for storing validated service account tokens. The cryptographic
+  # operations used during authentication require a lot of memory and CPU resources to validate
+  # service account tokens. The results of cryptographic operations can be cached to provide
+  # additional performance. This value corresponds to the number of valid service account tokens
+  # stored in the cache.
+  #
+  #   Default: '200'
+  #
+  #   Value must satisfy regex: ^[1-9]\d+$|^\d$
+  service_account_cache_size: '200'
+bottomline:
+  # The endpoint used for ingress to the bottomline-simulator-gateway
+  endpoint: 'bottomline.internal.prod.icsapi.com'
+  # The 6-digit code of the instructing bank, used by Bottomline for outbound FPS payments
+  instructing_bank_code: '123456'
+  # The name of the instructing bank, used by Bottomline for outbound FPS payments
+  instructing_bank_name: 'Test Bank'
+calendar:
+  db:
+    # Hostname for the calendar database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the calendar database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'calendar'
+    # Username to access the calendar database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'calendar'
+common:
+  bank:
+    # The identifier for this bank. Must not start with a capital letter or have spaces between
+    # characters.
+    #
+    #   Value must satisfy regex: ^[a-z][A-Za-z0-9\-]+$
+    name: 'mybank'
+    # Sort code for the bank
+    #
+    #   Value must satisfy regex: ^[0-9]{2}-[0-9]{2}-[0-9]{2}$
+    sort_code: '10-00-00'
+  basic_auth:
+    # To enable or disable basic authentication. If enabled; user, password and password salted hash values are expected
+    #
+    #   Default: 'enable'
+    #
+    #   Accepted values: 'enable', 'disable'
+    authentication: 'enable'
+    # Password for basic auth credentials applied to ingress.
+    #
+    # Used to restrict access to Vault instances in dev/test environments.
+    password: 'koreanbbqandsoju767'
+    # Hash for the above password - should be generated using a command similar to the following:
+    #   openssl passwd -apr1 -salt vault topsecret
+    password_hash: '$apr1$8h12iueo$9LGlfT41XheUPcZ8fTzb.1'
+    # Username for basic auth credentials applied to ingress.
+    #
+    # Used to restrict access to Vault instances in dev/test environments.
+    username: 'icsops'
+  db:
+    # Use SSL when connecting to the database.
+    #
+    #   Default: 'true'
+    #
+    #   Accepted values: 'true', 'false'
+    ssl: 'true'
+    # The postgres SSL mode to use when connecting to the database, for all services.
+    # For more details, see the Postgres documentation:
+    # https://www.postgresql.org/docs/current/libpq-ssl.html
+    #
+    #   Default: 'verify-full'
+    #
+    #   Accepted values: 'disable', 'allow', 'prefer', 'require', 'verify-ca', 'verify-full'
+    ssl_mode: 'verify-full'
+  # Set to true if this is a dev/test environment. Used to disable zipkin client ids in production
+  #
+  #   Accepted values: 'true', 'false'
+  is_non_production: 'false'
+  # DEPRECATED - appears unused.
+  #
+  #   Accepted values: 'true', 'false'
+  production_reconciliation: 'false'
+common_stream_api:
+  # The format of public topic messages consumed or produced by the Streaming API
+  #
+  #   Accepted values: 'json', 'protobuf'
+  message_format: 'json'
+core:
+  # The endpoint used for ingress to the core API
+  endpoint: 'core-api.internal.prod.icsapi.com'
+customer:
+  db:
+    # Hostname for the customer website database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # The name of the customer website database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'customer'
+    # Username to access the customer website database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'customer'
+  website:
+    # The endpoint used for ingress to the customer website
+    endpoint: 'customer.internal.prod.icsapi.com'
+data_loader:
+  db:
+    # Hostname for the data loader database
+    #
+    #   Default: the value of eplatform.db.host
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the data loader database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'data_loader'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'data_loader'
+    # Username to access the data loader database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'data_loader'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'data_loader'
+data_loader_api:
+  # The endpoint used for ingress to the data loader API
+  endpoint: 'data-loader-api.internal.prod.icsapi.com'
+documentation:
+  # The endpoint used for ingress to the documentation for vault APIs
+  endpoint: 'dd.internal.prod.icsapi.com'
+documents:
+  # The endpoint used for ingress to the documents service
+  endpoint: 'documents.internal.prod.icsapi.com'
+  # Port that the documents service should listen on
+  port: '443'
+eplatform:
+  db:
+    #used in Ops dashboard
+    # Hostname for the enterprise platform database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the eplatform database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'eplatform'
+    # Username to access the eplatform database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'eplatform'
+form3:
+  # AWS region for Form3 integration
+  #
+  #   Accepted values: 'ap-east-1', 'ap-northeast-1', 'ap-northeast-2', 'ap-northeast-3', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'ca-central-1', 'cn-north-1', 'cn-northwest-1', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'eu-west-3', 'eu-north-1', 'me-south1', 'sa-east-1', 'us-east-1', 'us-east-2', 'us-gov-east-1', 'us-gov-west-1', 'us-west-1', 'us-west-2'
+  aws_region: 'eu-west-1'
+  # Base endpoint for Form3 APIs
+  base_endpoint: 'https://api.staging-form3.tech'
+  # Client id for Form3 integration
+  client_id: 'FORM3_CLIENT_ID'
+  # Org id for Form3 integration
+  org_id: 'FORM3_ORG_ID'
+  # SQS URL for Form3 integration
+  sqs_url: 'http://sqs-url'
+integrations:
+  db:
+    # Hostname for the integrations database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the integrations database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'integrations'
+    # Username to access the integrations database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'integrations'
+istio:
+  auth_policy:
+    # Sets whether Istio should encrypt communication between Envoy Proxy's within the service mesh.
+    #
+    #   Type: bool
+    #   Accepted values: True, False
+    mtls_allow_tls: True
+    # Mutual TLS mode to use for istio
+    #
+    #   Accepted values: 'PERMISSIVE', 'STRICT'
+    mtls_mode: 'PERMISSIVE'
+  proxy:
+    # List of comma-separated CIDR ranges to exclude from the istio proxy (empty string for none or "*" for all ranges)
+    #
+    #   Default: ''
+    exclude_cidr: ''
+    # List of comma-separated CIDR ranges to include for the istio proxy (empty string for none or "*" for all ranges)
+    #
+    #   Default: '*'
+    include_cidr: '*'
+k8s:
+  # Path to the docker registry used for all Docker images.
+  # This should normally be the address of the Docker registry where the Vault docker images have been pushed.
+  # No trailing '/' is allowed.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^$|^.*[^\/]$
+  docker_registry_path: 'gcr.io/shared-281908/tm_vault'
+  # Name of the Kubernetes secret that contains the credentials to pull images from a private Docker registry.
+  # It is optional and only used for private docker registry.
+  #
+  #   Default: ''
+  #
+  #   Type: string
+  # image_pull_secrets_name: 'docker-registry-secret'
+  ingress:
+    # Annotations to apply to the kubernetes ingress objects - the values here are example for the
+    # Nginx ingress controller
+    annotations:
+      kubernetes.io/ingress.class: 'nginx'
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: '36s'
+      nginx.ingress.kubernetes.io/proxy-read-timeout: '600s'
+      tmachine.io/dns.class: 'private'
+      nginx.ingress.kubernetes.io/whitelist-source-range: 10.48.16.0/20,10.48.16.3,34.101.244.240,10.56.0.0/14
+    labels:
+      certmanager.k8s.io/provider: 'instances'
+  # The kubernetes namespace that this vault instance will be deployed to
+  namespace: 'tm-deploy-ns'
+kafka:
+  client:
+    # Bootstrap Broker Address(es)
+    brokers: 'my-kafka.kafka-ns:9092'
+    # Set to true to disable SSL for Kafka client to broker communications
+    #
+    #   Accepted values: 'true', 'false'
+    disable_ssl: 'true'
+    # Set to true to use the System CA/truststore for Kafka client to broker communications over SSL
+    #
+    #   Default: 'false'
+    #
+    #   Accepted values: 'true', 'false'
+    use_system_ca: 'false'
+  networking:
+    # Endpoint to expose for loadbalancer service to give access to Kafka from outside of the
+    # Kubernetes cluster.
+    endpoint: 'kafka.internal.prod.icsapi.com'
+    # Allowed source IP CIDR range for Kafka load balancer
+    source_range: ['0.0.0.0/0']
+nestlings:
+  db:
+    # Nestlings DB host
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Nestlings DB name
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'nestlings'
+    # Nestlings DB user
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'nestlings'
+  # Nestlings service endpoint
+  endpoint: 'nestlings.insert.endpoint.here'
+observability:
+  # Cluster name for observability functionality - used by monitoring components
+  #
+  #   Default: 'cluster.name.here'
+  cluster_name: 'prod-vault-cluster'
+  grafana:
+    # Enable anonymous access to Grafana
+    #
+    #   Default: 'false'
+    #
+    #   Accepted values: 'true', 'false'
+    auth_anonymous_enabled: 'true'
+    # Organisation name to use when setting up Grafana
+    #
+    #   Default: 'Main Org.'
+    auth_anonymous_org_name: 'Main Org.'
+    # Role to assign to the organisation in Grafana
+    #
+    #   Default: 'Viewer'
+    auth_anonymous_org_role: 'Viewer'
+    # Set this value to true if you want to configure CA authentication for the configured datasource
+    #
+    #   Default: 'false'
+    #
+    #   Accepted values: 'false', 'true'
+    caAuth: 'false'
+    # In case caAuth parameter is set to true, the value of this field will be used as the certificate used for authentication. ATTENTION: CERTIFICATE HAS TO BE IN A SINGLE LINE
+    caCert: '-----BEGIN CERTIFICATE-----QKEQWKLEQWKELQWKELQWKEL131231ASMD/SAMD/SAMCZXNcMZXNCASDASD434534KASMDAMWQEQWK-----END CERTIFICATE-----'
+    # Username for the default admin user for Grafana
+    #
+    #   Default: 'vault'
+    security_admin_user: 'vault'
+  ingress:
+    # Subdomain to use for all observability services in ingress
+    #
+    #   Default: 'observability.services.endpoint.domain.here'
+    domain: 'observability.internal.prod.icsapi.com'
+    # Labels to apply to the ingress for observability services
+    #
+    #   Default: {'certmanager.k8s.io/provider': 'instances'}
+    labels:
+      certmanager.k8s.io/provider: 'instances'
+    # Annotations to apply to the ingress for observability services
+    #
+    #   Default: {'kubernetes.io/ingress.class': 'nginx-internal', 'tmachine.io/dns.class': 'private', 'certmanager.k8s.io/cluster-issuer': 'lets-encrypt', 'certmanager.k8s.io/acme-challenge-type': 'dns01', 'certmanager.k8s.io/acme-dns01-provider': 'instances'}
+    monitoring-annotations:
+      certmanager.k8s.io/acme-challenge-type: 'dns01'
+      certmanager.k8s.io/acme-dns01-provider: 'instances'
+      certmanager.k8s.io/cluster-issuer: 'lets-encrypt'
+      kubernetes.io/ingress.class: 'nginx-internal'
+      tmachine.io/dns.class: 'private'
+  prometheus:
+    # Endpoint where prometheus sends alerts to
+    #
+    #   Default: '_api._tcp.alertmanager.monitoring.svc.cluster.local.'
+    alertmanager_endpoint: '_api._tcp.alertmanager.monitoring.svc.cluster.local.'
+    # The disk size of the prometheus statefulsets
+    # WARNING - this value is not changeable after the first deployment, but the volume can still be
+    # expanded by modifying the underlying PersistentVolumeClaim while leaving this field unchanged
+    #
+    #   Default: '50Gi'
+    storage_size: '50Gi'
+ops:
+  # Name of the bank, as displayed in the operations dashboard
+  bank_name: 'client'
+  db:
+    # Hostname for the operations dashboard database
+    #
+    #   Default: the value of eplatform.db.host
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the operations dashboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'ops'
+    # Username to access the operations dashboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'ops'
+  # Default title for pages in the operations dashboard
+  default_page_title: 'Nikel'
+  pluggable_components:
+    # Payment hub pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    payments_hub: False
+    # Product hub pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    product_hub: False
+    # Experience layer pluggable component
+    #
+    #   Default: False
+    #
+    #   Accepted values: True, False
+    xpl: False
+  website:
+    # The endpoint used for ingress to the operations dashboard website.
+    endpoint: 'ops.internal.prod.icsapi.com'
+payments_hub:
+  # A JSON object describing the default payment execution plans per direction for FPS payments.
+  # These plans define how the payment hub processes a given payment, and alters parts of its
+  # lifecycle. If no execution plan is specified on creation of a payment, then the relevant value
+  # from this json will be applied. The object should be of the form of two keys, "INBOUND" and
+  # "OUTBOUND", where the value is the execution plan name. Currently the only supported execution
+  # plans for FPS are "FPS_STANDARD_V1" (inbound and outbound) and "FPS_CLEARED_V1" (inbound only).
+  # Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: '{\n  "INBOUND": "FPS_STANDARD_V1",\n  "OUTBOUND": "FPS_STANDARD_V1"\n}\n'
+  default_fps_execution_plans_json: |
+    {
+      "INBOUND": "FPS_STANDARD_V1",
+      "OUTBOUND": "FPS_STANDARD_V1"
+    }
+  # The endpoint used for ingress to the payment hub.
+  endpoint: 'payments-hub-api.internal.prod.icsapi.com'
+  # An optional json object defining the exception handling behaviour; Change to {} for no
+  # exception handling.
+  exception_handling_cases_json: |
+    {
+      "INBOUND_AUTH_REJECTIONS": {
+        "RESTRICTION_REQUIRES_REVIEW": {
+          "REDIRECT_FUNDS": true
+        }
+      }
+    }
+  # The internal account for FPS.
+  fps_internal_account: '25'
+  # A prefix that is used during the generation of a scheme_transaction_id (for FPS payments).
+  fps_txnref_prefix: 'TMFPS'
+  # An optional GCP bucket name that is used by the Vocalink service to store and retrieve
+  # payment scheme data. Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: ''
+  gcp_bucket: 'vocalink_data_bucket'
+  # A comma separated list of sort codes that are considered to be local to the Vault instance. The Payments Hub uses
+  # these to:
+  # - Determine if payments should be routed as OnUs payments (rather than going out to a scheme).
+  # - As a validation check during GBDSC account number generation. It is not possible to generate an account number
+  #   for a sort code that is not listed here.
+  local_sort_codes: '999999,999998'
+  # A bank defined limit for an outbound FPS payments. Note that this is not the same as the scheme transaction limit
+  # (SCHEME_TRANSACTION_LIMIT) and may be set to a lower value if a bank wishes to limit the value of outbound FPS
+  # payments further.
+  outbound_txn_limit: 100000
+  # The internal account to which funds to be redirected in exception handling cases.
+  redirection_account: '33'
+  # The id of the internal account to which funds are redirected in the case where pre-cleared funds cannot
+  # be applied to a customer's account (for example, in the FPS execution plan "FPS_CLEARED") Only applicable
+  # if the Payments Hub is deployed.
+  #
+  #   Default: '33'
+  #
+  #   Value must satisfy regex: ^[a-z0-9A-Z\_\-]{0,36}$
+  unapplied_funds_account: '33'
+  # The GBDSC account number of the FPS routable payment device for the internal account to which funds are redirected
+  # in the case where cleared funds cannot be applied to a customer's account. This sort code will be used for creating
+  # an automated outbound return payment. Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^([0-9]{8})?$
+  unapplied_funds_account_gbdsc_account_number: '23411738'
+  # The GBDSC sort code of the FPS routable payment device for the internal account to which funds are redirected
+  # in the case where cleared funds cannot be applied to a customer's account. This sort code will be used for creating
+  # an automated outbound return payment. Only applicable if the Payments Hub is deployed.
+  #
+  #   Default: ''
+  #
+  #   Value must satisfy regex: ^([0-9]{6})?$
+  unapplied_funds_account_gbdsc_sort_code: '044000'
+policy:
+  # Time interval to control cache renewal frequency
+  cacheRenewalInterval: '10s'
+postings:
+  api:
+    # The format of public topic messages consumed or produced by the Streaming API
+    #
+    #   Accepted values: 'json', 'proto'
+    format: 'json'
+product_catalogue:
+  db:
+    # Hostname for the product catalogue database
+    #
+    #   Default: the value of vault.db.host
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the product catalogue database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'product_catalogue'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'product_catalogue'
+    # Username to access the product catalogue database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Default: 'product_catalogue'
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'product_catalogue'
+products_api:
+  # The endpoint used for ingress to the products API
+  endpoint: 'products-api.internal.prod.icsapi.com'
+saml_idp:
+  # The SAML x509 certificate used by Vault to verify requests, provided by IDP at setup.
+  # Public key in one line format string.
+  #
+  #   Value must satisfy regex: ^.*$
+  certificate: ${SAML_CERT}
+    # The key of the email SAML attribute sent by the IDP, as configured there
+  email_attribute: 'urn:oid:1.2.840.113549.1.9.1'
+  # The endpoint of the dummy SAML IDP, if used (ie, when saml_idp_pkg is deployed)
+  endpoint: 'saml.internal.prod.icsapi.com'
+  # The SAML Entity ID given by the IDP at setup
+  entity_id: 'https://kc-saml.internal.prod.icsapi.com/auth/realms/tm-vault/broker/saml/endpoint/descriptor'
+  # Optional, the key of the name SAML attribute sent by the IDP, as configured there
+  name_attribute: 'urn:oid:2.5.4.42'
+  # The key of the roles SAML attribute sent by the IDP, as configured there
+  roles_attribute: 'urn:oid:1.3.6.1.4.1.5923.1.1.1.1'
+  # The SAML logout URL for the given IDP, usually not provided at setup but easy to find
+  slo_url: 'https://kc-saml.internal.prod.icsapi.com/auth/realms/tm-vault/protocol/saml'
+  # The SAML SSO URL given by the IDP at setup, to which Vault will redirect
+  sso_url: 'https://kc-saml.internal.prod.icsapi.com/auth/realms/tm-vault/protocol/saml'
+scheduler:
+  db:
+    # Hostname for the scheduler database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the scheduler database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'scheduler'
+    # Username to access the scheduler database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'scheduler'
+switchboard:
+  db:
+    #Internal service workflow <-> Core API
+    # Hostname for the switchboard database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the switchboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'switchboard'
+    # Username to access the switchboard database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'switchboard'
+  # The endpoint used for ingress to the switchboard API
+  endpoint: 'switchboard.internal.prod.icsapi.com'
+tag_resolver:
+  aws:
+    # Region to use when accessing AWS APIs
+    #
+    #   Accepted values: 'ap-east-1', 'ap-northeast-1', 'ap-northeast-2', 'ap-northeast-3', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'ca-central-1', 'cn-north-1', 'cn-northwest-1', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'eu-west-3', 'eu-north-1', 'me-south1', 'sa-east-1', 'us-east-1', 'us-east-2', 'us-gov-east-1', 'us-gov-west-1', 'us-west-1', 'us-west-2'
+    region: 'eu-west-1'
+vault:
+  db:
+    # Hostname for the vault database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Is this database an RDS instance? Used to enable RDS specific functionality
+    #
+    #   Accepted values: 'true', 'false'
+    is_rds: 'false'
+    # Name of the vault database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'vault'
+    # Name of the replication slot to use for streaming to vault services. Must conform with the
+    # regex "^[a-z_][a-z0-9_]{0-59}+$". Usage of lower case alphabets, integers and underscores are
+    # valid.
+    #
+    #   Value must satisfy regex: ^[a-z_][a-z0-9\_]{0,59}$
+    replication_slot: 'vault_replication'
+    # User for streaming replication from this database to vault services
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    replication_user: 'vaultreplication'
+    # Root user for the vault database (used for schema initialisation)
+    #
+    #   Value must satisfy regex: ^[a-zA-Z][a-z0-9A-Z\_]{0,15}$
+    root_user: 'vaultbootstrap'
+    # Username for the vault database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    #used to be vault
+    user: 'vault'
+workflow_simulator:
+  # The endpoint used for ingress to the workflow simulator
+  endpoint: 'workflow-simulator.internal.prod.icsapi.com'
+workflows_api:
+  # The endpoint used for ingress to the switchboard API
+  endpoint: 'workflows-api.internal.prod.icsapi.com'
+workflows_callback_router:
+  # Lists of public topics consumed by the callback router
+  streaming_api_consumer_config: |
+    # Public topics to be consumed by the callback router for auto trigger conditions.
+    # See {documentation-url}/reference/workflows-tickets/workflow-actions/callback-action/#streaming-api-autotrigger
+    ASYNC_CALLBACK_TOPICS: []
+
+    # Public topics to be consumed by the callback router for auto instantiation conditions.
+    # See {documentation-url}/reference/workflows-tickets/workflow-auto-instantiations/#auto-instantiations-overview
+    AUTO_INSTANTIATION_TOPICS: []
+xpl:
+  db:
+    # Hostname for the experience layer database
+    host: 'prod-vault-db-vip.internal.prod.icsapi.com'
+    # Name of the experience layer database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    name: 'xpl'
+    # Username to access the experience layer database
+    #
+    # Note: Hyphen characters as part of this value are supported, but recommended to be avoided
+    #
+    #   Value must satisfy regex: ^[a-zA-Z\_][a-z0-9A-Z\_-]{0,59}$
+    user: 'xpl'
+  # The endpoint used for ingress to the XPL API
+  endpoint: 'xpl.internal.prod.icsapi.com'

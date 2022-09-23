@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vault-installer
+  namespace: 'tm-deploy-ns'
+  labels:
+    app: vault-installer
+spec:
+  priorityClassName: platform-critical
+  serviceAccountName: vault-sa
+  automountServiceAccountToken: true
+  containers:
+    - name: vault-installer
+      image: gcr.io/shared-281908/tm_vault/vault/installer/vault_installer_container@sha256:9029c0eceab58058ffed4b30cb6be3b6369d4bbd095ed372e864528e142e3587
+      env:
+        - name: CLOUD_PROVIDER
+          value: GCP
+        # This variable should be set to the name of the k8s secret that contains the secret needed
+        # to pull from the remote repository
+        #- name: IMAGE_PULL_SECRETS_NAME
+        #  value:
+      command:
+        - /bin/bash
+        - -c
+        - tail -f /dev/null
+      volumeMounts:
+        - mountPath: /release-artifacts
+          name: release-artifacts-volume
+        - mountPath: /release-artifacts/config-templates
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "1.0"
+          memory: 2000Mi
+  initContainers:
+    - name: copy-crown-packages
+      image: gcr.io/shared-281908/tm_vault/vault/installer/crown_packages@sha256:f13ced9938029b1df6ed1f5edb857f60dfd5e8ce1d5db4b6a6170978c97fb9d2
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/* /release-artifacts-output/
+      volumeMounts:
+        - mountPath: /release-artifacts-output
+          name: release-artifacts-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+    - name: copy-config-templates
+      image: gcr.io/shared-281908/tm_vault/instances/common/k8s/config_templates@sha256:1022b4422684b205c7ce663ccb9883a66293c8e3211e2e10e083db78c34209ca
+      command:
+        - /bin/sh
+        - -c
+        - cp -r /release-artifacts/config-templates/* /config-templates-out/
+      volumeMounts:
+        - mountPath: /config-templates-out
+          name: config-templates-volume
+      resources:
+        requests:
+          cpu: "0.1"
+          memory: 100Mi
+        limits:
+          cpu: "0.3"
+          memory: 100Mi
+  volumes:
+    - name: release-artifacts-volume
+      emptyDir: {}
+    - name: config-templates-volume
+      emptyDir: {}

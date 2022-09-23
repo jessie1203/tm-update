@@ -1,0 +1,808 @@
+[
+  {
+    "principal": "access_control",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "access_control",
+        "kv_secret_path": "access-control/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem",
+          "client_chain.der_b64",
+          "client_key.der_b64",
+          "cachain.der_b64"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "access-control/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "access_control_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "access_control_migrator",
+        "kv_secret_path": "access-control-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "access-control-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "attribute_library",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "attribute_library",
+        "kv_secret_path": "attribute-library/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "attribute-library/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "attribute_library_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "attribute_library_migrator",
+        "kv_secret_path": "attribute-library-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "attribute-library-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "audit",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "audit",
+        "kv_secret_path": "audit/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "audit/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "audit_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "audit_migrator",
+        "kv_secret_path": "audit-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "audit-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "calendar",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "calendar",
+        "kv_secret_path": "calendar/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "calendar/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "calendar_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "calendar_migrator",
+        "kv_secret_path": "calendar-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "calendar-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "calendar_schedules",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "calendar_schedules",
+        "kv_secret_path": "calendar-schedules/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "calendar-schedules/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "calendar_schedules_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "calendar_schedules_migrator",
+        "kv_secret_path": "calendar-schedules-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "calendar-schedules-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "configuration_layer",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "configuration_layer",
+        "kv_secret_path": "configuration-layer/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "configuration-layer/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "configuration_layer_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "configuration_layer_migrator",
+        "kv_secret_path": "configuration-layer-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "configuration-layer-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "data_loader",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "data_loader",
+        "kv_secret_path": "data-loader/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "data-loader/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "data_loader_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "data_loader_migrator",
+        "kv_secret_path": "data-loader-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "data-loader-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "eplatform",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "eplatform",
+        "kv_secret_path": "eplatform/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem",
+          "client_chain.der_b64",
+          "client_key.der_b64",
+          "cachain.der_b64"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "eplatform/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "eplatform_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "eplatform_migrator",
+        "kv_secret_path": "eplatform-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "eplatform-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "integrations",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "integrations",
+        "kv_secret_path": "integrations/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "integrations/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "integrations_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "integrations_migrator",
+        "kv_secret_path": "integrations-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "integrations-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "ops",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "ops",
+        "kv_secret_path": "ops/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "ops/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "ops_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "ops_migrator",
+        "kv_secret_path": "ops-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "ops-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "parameter_store",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "parameter_store",
+        "kv_secret_path": "parameter-store/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "parameter-store/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "parameter_store_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "parameter_store_migrator",
+        "kv_secret_path": "parameter-store-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "parameter-store-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "product_catalogue",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "product_catalogue",
+        "kv_secret_path": "product-catalogue/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "product-catalogue/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "product_catalogue_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "product_catalogue_migrator",
+        "kv_secret_path": "product-catalogue-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "product-catalogue-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "schedule_manager",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "schedule_manager",
+        "kv_secret_path": "schedule-manager/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "schedule-manager/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "schedule_manager_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "schedule_manager_migrator",
+        "kv_secret_path": "schedule-manager-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "schedule-manager-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "scheduler",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "scheduler",
+        "kv_secret_path": "scheduler/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "scheduler/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "scheduler_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "scheduler_migrator",
+        "kv_secret_path": "scheduler-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "scheduler-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "switchboard",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "switchboard",
+        "kv_secret_path": "switchboard/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "switchboard/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "switchboard_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "switchboard_migrator",
+        "kv_secret_path": "switchboard-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "switchboard-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_balance",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_balance",
+        "kv_secret_path": "vault-balance/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-balance/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_balance_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_balance_migrator",
+        "kv_secret_path": "vault-balance-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-balance-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_core",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_core",
+        "kv_secret_path": "vault-core/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-core/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_core_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_core_migrator",
+        "kv_secret_path": "vault-core-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-core-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_ledger_balances",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_ledger_balances",
+        "kv_secret_path": "vault-ledger-balances/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-ledger-balances/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_ledger_balances_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_ledger_balances_migrator",
+        "kv_secret_path": "vault-ledger-balances-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-ledger-balances-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_postings",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_postings",
+        "kv_secret_path": "vault-postings/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-postings/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "vault_postings_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "vault_postings_migrator",
+        "kv_secret_path": "vault-postings-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "vault-postings-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "xpl",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "xpl",
+        "kv_secret_path": "xpl/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "xpl/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  },
+  {
+    "principal": "xpl_migrator",
+    "authentication_methods": {
+      "client_certificates": {
+        "common_name": "xpl_migrator",
+        "kv_secret_path": "xpl-db-migrator/database",
+        "kv_secret_keys": [
+          "cachain.pem",
+          "client_chain.pem",
+          "client_key.pem"
+        ]
+      },
+      "password": {
+        "kv_secret_path": "xpl-db-migrator/database",
+        "kv_secret_keys": [
+          "DB_PASSWORD"
+        ]
+      }
+    }
+  }
+]
